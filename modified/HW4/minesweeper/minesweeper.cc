@@ -14,6 +14,7 @@ Minesweeper::~Minesweeper(){
 
 bool Minesweeper::setMap() {
 
+    
     for (int i = 0; i < mRow; i++)
     {
         for (int j = 0; j < mColumn; j++)
