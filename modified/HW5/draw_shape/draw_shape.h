@@ -37,6 +37,7 @@ public:
     void Dump(ostream &os);
 
 private:
+    void Drawmap(vector<vector<char> > map);
     size_t row_, col_;
     vector<Shape> shapes_;
 };
