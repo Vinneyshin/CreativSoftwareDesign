@@ -7,6 +7,12 @@ int main(int argc, char const *argv[])
     size_t row, column;
 
     cin >> column >> row;
+
+    // Validating whether inputs are integer or not.
+    if (cin.fail())
+        return -1;
+
+    // new line handling
     cin.ignore();
 
     Canvas cv(row, column);
@@ -58,10 +64,7 @@ int main(int argc, char const *argv[])
                 8. . . . . . . . . .
                 */
 
-                if (shape.x + shape.width / 2 > column - 1 
-                || shape.y + shape.height / 2 > row - 1 
-                || shape.x - shape.width / 2 < 0 
-                || shape.y - shape.height / 2 < 0)
+                if (shape.x + shape.width / 2 > column - 1 || shape.y + shape.height / 2 > row - 1 || shape.x - shape.width / 2 < 0 || shape.y - shape.height / 2 < 0)
                 {
                     cout << "error out of canvas" << endl;
                     continue;
@@ -84,9 +87,7 @@ int main(int argc, char const *argv[])
                       #####      <
 
                 */
-                if (shape.x + (shape.height - 1) > column - 1 
-                || shape.y + (shape.height - 1) > row - 1 
-                || shape.x - (shape.height - 1) < 0)
+                if (shape.x + (shape.height - 1) > column - 1 || shape.y + (shape.height - 1) > row - 1 || shape.x - (shape.height - 1) < 0)
                 {
                     cout << "error out of canvas" << endl;
                     continue;
@@ -101,9 +102,7 @@ int main(int argc, char const *argv[])
                 shape.height = stoi(vs[3]);
                 shape.brush = vs[4][0];
 
-                if (shape.x + (shape.height - 1) > column - 1 
-                || shape.y - (shape.height - 1) < 0 
-                || shape.x - (shape.height - 1) < 0)
+                if (shape.x + (shape.height - 1) > column - 1 || shape.y - (shape.height - 1) < 0 || shape.x - (shape.height - 1) < 0)
                 {
                     cout << "error out of canvas" << endl;
                     continue;
