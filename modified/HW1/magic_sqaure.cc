@@ -100,6 +100,7 @@ int main(int argc, char const *argv[])
 
     int** raw_data = (int**)malloc(sizeof(int*) * array_length);
     
+    //Initializing
     for (int i = 0; i < array_length; i++)
     {
         raw_data[i] = (int*)malloc(sizeof(int) * array_length);
