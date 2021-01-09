@@ -7,7 +7,6 @@
 #define MAX_SIZE 1024
 
 #include <iostream>
-#include <bits/stdc++.h>
 
 using namespace std;
 

@@ -3,7 +3,6 @@
 #include <string>
 
 #include "simple_int_set.h"
-#include "simple_int_set.cc"
 
 using namespace std;
 

@@ -1,11 +1,16 @@
 #include "simple_int_set.h"
 
+void swap(int* left, int* right);
+int partition(int* array, int low, int high);
+void quickSort(int* array, int low, int high);
+
 SimpleIntSet::SimpleIntSet(int *_elements, int _count)
 {
     mElements = new int[_count];
     for (size_t i = 0; i < _count; i++)
         mElements[i] = _elements[i];
     mElementCount = _count;
+    sortElements();
 }
 
 SimpleIntSet::~SimpleIntSet()
@@ -15,7 +20,7 @@ SimpleIntSet::~SimpleIntSet()
 
 void SimpleIntSet::sortElements()
 {
-    sort(mElements, mElements + mElementCount);
+    quickSort(mElements, 0, mElementCount - 1);
 }
 
 void SimpleIntSet::printSet()
@@ -30,131 +35,151 @@ void SimpleIntSet::printSet()
 
 SimpleIntSet* SimpleIntSet::unionSet(SimpleIntSet& _operand)
 {
+    // More space than adding two elements() sizes.
+    int * tmpElements = new int[mElementCount + _operand.elementCount()];
+    int tmpElementsCount = mElementCount;
+
+    for (size_t i = 0; i < mElementCount; i++)
+    {
+        tmpElements[i] = mElements[i];
+    }
+    
     for (size_t i = 0; i < _operand.elementCount(); i++)
     {
         bool isRepeated = false;
+        int target = _operand.elements()[i];
+        
         for (size_t j = 0; j < mElementCount; j++)
         {
-            if(mElements[j] == _operand.elements()[i])
+            if(mElements[j] == target)
             {
                 isRepeated = true;
                 break;
             }
         }
-        if(!isRepeated)
+
+        if (!isRepeated)
         {
-            int * tmpElements = new int[++mElementCount];
-            for (size_t j = 0; j < mElementCount - 1; j++)
-                tmpElements[j] = mElements[j];
-            
-            tmpElements[mElementCount - 1] = _operand.elements()[i];
-            
-            //re-assigning heap memory to avoid memory leak.
-            delete mElements;
-            mElements = new int[mElementCount];
-            
-            for (size_t i = 0; i < mElementCount; i++)
-                mElements[i] = tmpElements[i];
-            delete tmpElements;
+            tmpElements[tmpElementsCount] = target;
+            ++tmpElementsCount;
         }
     }
-    sortElements();
+
+    delete mElements;
+
+    mElements = new int [tmpElementsCount];
+    mElementCount = tmpElementsCount;
+
+    for (size_t i = 0; i < mElementCount; i++)
+    {
+        mElements[i] = tmpElements[i];
+    }
+
     return this;
 }
 
 SimpleIntSet* SimpleIntSet::differenceSet(SimpleIntSet& _operand)
-{
+{   
     for (size_t i = 0; i < _operand.elementCount(); i++)
     {
-        bool isRepeated = false;
-        int repeatedIndex = -1;
+        int target = _operand.elements()[i];
         for (size_t j = 0; j < mElementCount; j++)
         {
-            if(mElements[j] == _operand.elements()[i])
+            if(mElements[j] == target)
             {
-                isRepeated = true;
-                repeatedIndex = j;
+                int repeatedIndex = j;
+                int last_index = mElementCount - 1;
+
+                // Move one index to the left            
+                if(!(repeatedIndex == last_index))
+                {
+                    for (size_t k = repeatedIndex; k < last_index; k++)
+                    {
+                        mElements[k] = mElements[k + 1];
+                    }
+                }
+                --mElementCount;
                 break;
             }
         }
-        if(isRepeated)
-        {
-            int last_index = mElementCount - 1;
-            
-            if(!(repeatedIndex == last_index))
-                for (size_t i = repeatedIndex; i < last_index; i++)
-                    mElements[i] = mElements[i + 1];
-            
-            int * tmpElements = new int[--mElementCount];
-
-            for (size_t j = 0; j < mElementCount; j++)
-                tmpElements[j] = mElements[j];
-            
-            
-            //re-assigning heap memory to avoid memory leak.
-            delete mElements;
-            mElements = new int[mElementCount];
-            
-            for (size_t i = 0; i < mElementCount; i++)
-                mElements[i] = tmpElements[i];
-
-            delete tmpElements;
-        }
     }
-    sortElements();
+
+    int * tmpElements = new int[mElementCount];
+    int tmpElementsCount = mElementCount;
+    
+    for (size_t i = 0; i < tmpElementsCount; i++)
+    {
+        tmpElements[i] = mElements[i];
+    }
+
+    delete mElements;
+    mElements = tmpElements;
+
     return this;
 }
 
 SimpleIntSet* SimpleIntSet::intersectSet(SimpleIntSet& _operand)
 {
-    int * repeatElements = NULL;
+    int max = mElementCount > _operand.elementCount() ? mElementCount : _operand.elementCount();
+    int * tmpElements = new int [max];
+    int repeatCnt = 0;
+
     for (size_t i = 0; i < _operand.elementCount(); i++)
     {
-        bool isRepeated = false;
-        int repeatedIndex = -1;
-        int repeatCnt = 0;
+        int target = _operand.elements()[i];
         for (size_t j = 0; j < mElementCount; j++)
         {
-            if(mElements[j] == _operand.elements()[i])
+            if(mElements[j] == target)
             {
-                isRepeated = true;
-                repeatedIndex = j;
+                tmpElements[repeatCnt] = target;
                 ++repeatCnt;
-                int * tmpElements = new int[repeatCnt];
-                repeatElements = tmpElements;
-                repeatElements[repeatCnt - 1] = _operand.elements()[i];
                 break;
             }
         }
+    }
 
-        if(isRepeated)
-        {
-            if(repeatElements = NULL)
-            {
-                int * tmpElements = new int[repeatCnt];
-                repeatElements = tmpElements;
-            }
-            else 
-            {
-                
-            }
-
-            
-            
-            
-            //re-assigning heap memory to avoid memory leak.
-            delete mElements;
-            mElements = new int[mElementCount];
-            
-            for (size_t i = 0; i < mElementCount; i++)
-                mElements[i] = tmpElements[i];
-
-            delete tmpElements;
-        }
+    delete mElements;
+    mElements = new int [repeatCnt];
+    mElementCount = repeatCnt;
+    
+    for (size_t i = 0; i < mElementCount; i++)
+    {
+        mElements[i] = tmpElements[i];
     }
     return this;
 }
 
-//TODO 각 함수마다 반복되는 부분 private 함수로 빼서 최적화하기
+void swap(int* left, int* right){
+    int tmp = *left;
+    *left = *right;
+    *right = tmp;
+}
 
-//
+int partition(int* array, int low, int high) {
+    // Set the rightmost as a pivot
+    int pivot = array[high];
+    int i = (low - 1);
+
+    for (size_t j = low; j < high; j++)
+    {
+        if (array[j] <= pivot)
+        {
+            i++;
+            swap(&array[i], &array[j]);
+        }
+    }
+    swap(&array[i + 1], &array[high]);
+    return i + 1;
+    
+}
+
+void quickSort(int* array, int low, int high) {
+    //"high" variable is rightmost
+    //"low" variable is leftmost
+    if(low < high)
+    {
+        int pi = partition(array, low, high); 
+        quickSort(array, low, pi - 1);
+        quickSort(array, pi + 1, high);
+    }
+}
