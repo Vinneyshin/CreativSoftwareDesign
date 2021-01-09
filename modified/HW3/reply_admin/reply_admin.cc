@@ -15,7 +15,7 @@ ReplyAdmin::ReplyAdmin()
 //destructor
 ReplyAdmin::~ReplyAdmin()
 {
-    delete chats;
+    delete[] chats;
 }
 
 int ReplyAdmin::getChatCount() const

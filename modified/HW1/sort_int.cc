@@ -71,7 +71,7 @@ int main(int argc, char const *argv[])
     }
     cout << endl;
 
-    delete array;
+    delete[] array;
     
     return 0;
 }

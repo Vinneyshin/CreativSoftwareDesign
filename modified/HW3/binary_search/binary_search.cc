@@ -56,7 +56,7 @@ BinarySearch::BinarySearch() {
 }
 
 BinarySearch::~BinarySearch() {
-
+    delete[] mArray;
 }
 int BinarySearch::getIndex(int _element) {
 

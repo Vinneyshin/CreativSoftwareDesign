@@ -15,7 +15,7 @@ SimpleIntSet::SimpleIntSet(int *_elements, int _count)
 
 SimpleIntSet::~SimpleIntSet()
 {
-    delete mElements;
+    delete[] mElements;
 }
 
 void SimpleIntSet::sortElements()
@@ -65,7 +65,7 @@ SimpleIntSet* SimpleIntSet::unionSet(SimpleIntSet& _operand)
         }
     }
 
-    delete mElements;
+    delete[] mElements;
 
     mElements = new int [tmpElementsCount];
     mElementCount = tmpElementsCount;
@@ -112,7 +112,7 @@ SimpleIntSet* SimpleIntSet::differenceSet(SimpleIntSet& _operand)
         tmpElements[i] = mElements[i];
     }
 
-    delete mElements;
+    delete[] mElements;
     mElements = tmpElements;
 
     return this;
@@ -138,7 +138,7 @@ SimpleIntSet* SimpleIntSet::intersectSet(SimpleIntSet& _operand)
         }
     }
 
-    delete mElements;
+    delete[] mElements;
     mElements = new int [repeatCnt];
     mElementCount = repeatCnt;
     
