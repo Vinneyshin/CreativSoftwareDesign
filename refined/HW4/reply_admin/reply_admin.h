@@ -10,15 +10,13 @@
 #define NUM_OF_CHAT 200
 
 #include <iostream>
-#include <string>
+#include <list>
 using namespace std;
 
 class ReplyAdmin
 {
 private:
-    string* chats;
-    
-    int getChatCount();
+    list<string> chats;
     
 public:
     ReplyAdmin();
@@ -26,7 +24,7 @@ public:
     
     bool addChat(string _chat);
     bool removeChat(int _index);                // #remove #
-    bool removeChat(int *_indices, int _count); // #remove #,#,#,#
+    bool removeChat(list<int> _indices); // #remove #,#,#,#
     bool removeChat(int _start, int _end);      // #remove #-#
     void printChat();
 };

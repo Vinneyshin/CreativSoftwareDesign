@@ -18,8 +18,7 @@ bool replyOperation(ReplyAdmin *_replyAdmin)
         int end = -1;
         int number = -1;
         
-        int* numbers = new int[NUM_OF_CHAT];
-        int numbersCount = 0;
+        list<int> numbers;
         
         bool isRemoveValid = false;
         
@@ -35,7 +34,7 @@ bool replyOperation(ReplyAdmin *_replyAdmin)
             }
             else
             {
-                if(c == ',') numbers[numbersCount++] = number;
+                if(c == ',') numbers.push_back(number);
                 else if(c == '-') start = number;
                 number = -1;
             }
@@ -46,10 +45,10 @@ bool replyOperation(ReplyAdmin *_replyAdmin)
 		if (end >= start && start >= 0) {
 			isRemoveValid = _replyAdmin->removeChat(start, end);
 		}
-        else if(numbersCount > 0)
+        else if(numbers.size() > 0)
         {
-            numbers[numbersCount++] = number; // final number
-            isRemoveValid = _replyAdmin->removeChat(numbers, numbersCount);
+            numbers.push_back(number); // final number
+            isRemoveValid = _replyAdmin->removeChat(numbers);
         }
 		else if (number >= 0) {
 			isRemoveValid = _replyAdmin->removeChat(number);
@@ -59,9 +58,6 @@ bool replyOperation(ReplyAdmin *_replyAdmin)
 		if (isRemoveValid == true) {
 			_replyAdmin->printChat();
 		}
-
-        
-        delete[] numbers;
     }
     else if(_replyAdmin->addChat(inputs)) _replyAdmin->printChat();
     
