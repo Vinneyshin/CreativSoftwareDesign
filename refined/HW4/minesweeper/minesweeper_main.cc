@@ -10,8 +10,8 @@ int main(int argc, char const *argv[])
     size_t row, column;
     string command;
     Minesweeper minesweeper;
-
-    while (true)
+    bool isValid = true; 
+    while (isValid)
     {
         getline(cin, command);
 
@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
             iss >> column >> row;
 
             minesweeper = Minesweeper(row, column);
-            minesweeper.setMap();
+            isValid = minesweeper.setMap();
             minesweeper.calMap();
         }
         else if (command.find(":toggle") != string::npos)
@@ -37,7 +37,7 @@ int main(int argc, char const *argv[])
 
             iss >> x >> y;
 
-            minesweeper.toggleMine(x, y);
+            isValid = minesweeper.toggleMine(x, y);
             minesweeper.calMap();
         }
         else if (command.find(":play") != string::npos)
