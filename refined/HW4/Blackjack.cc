@@ -14,7 +14,5 @@ int main(int argc, char const *argv[])
         vi.push_back(x);
     }
     
-    
-
     return 0;
 }
