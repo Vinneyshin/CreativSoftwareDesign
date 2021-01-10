@@ -3,76 +3,64 @@ using namespace std;
 
 Minesweeper::Minesweeper(size_t row, size_t column) {
     mRow = row;
-    mColumn = column; 
-    mMapData_raw.resize(row, vector<char>(column));
-    mMapData_cal.resize(row, vector<char>(column, '0'));
-}
-
-Minesweeper::~Minesweeper(){
-    
+    mColumn = column;
 }
 
 bool Minesweeper::setMap() {
+    string line;
 
-    
-    for (int i = 0; i < mRow; i++)
+    for (size_t i = 0; i < mRow; ++i)
     {
-        for (int j = 0; j < mColumn; j++)
+        getline(cin, line);
+        if (line.size() > mColumn)
         {
-            cin >> mMapData_raw[i][j];
-            
-            if (mMapData_raw[i][j] == '*')
-            {
-                mMapData_cal[i][j] = '*';
-                
-                if(i - 1 >= 0 
-                && j - 1 >= 0)
-                    //left up
-                    ++mMapData_cal[i - 1][j - 1];
-                
-                if(i - 1 >= 0)
-                    //up
-                    ++mMapData_cal[i - 1][j];
-                
-                if(i - 1 >= 0
-                && j + 1 < mColumn)
-                    //right up
-                    ++mMapData_cal[i - 1][j + 1];
-
-                if(j - 1 >= 0)
-                    //left
-                    ++mMapData_cal[i][j - 1];
-
-                if(j + 1 < mColumn)
-                    //right
-                    ++mMapData_cal[i][j + 1];
-
-                if(i + 1 < mRow
-                && j - 1 >= 0)
-                    //left down
-                    ++mMapData_cal[i + 1][j - 1];
-
-                if(i + 1 < mRow)
-                    //down
-                    ++mMapData_cal[i + 1][j];
-
-                if(i + 1 < mRow
-                && j + 1 < mColumn)
-                    //right down
-                    ++mMapData_cal[i + 1][j + 1];
-            }
+            return false;
         }
+        mRawMap.push_back(line);
     }
 
-    for (int i = 0; i < mRow; i++)
+    return true;
+}
+
+bool Minesweeper::calMine(size_t _x, size_t _y){
+     // calMine은 mRawMap에서 *가 있는지 확인하고
+     // 0으로 초기화된 mCalMap에 1씩 더해주기.
+    // pair 로
+    vector<pair<size_t, size_t> > minePos;
+    for (size_t i = 0; i < mRow; i++)
     {
-        for (int j = 0; j < mColumn; j++)
+        for (size_t j = 0; j < mColumn; j++)
         {
-            cout << mMapData_cal[i][j];
+            if(mRawMap[i][j] == '*')
+            {
+                minePos.push_back(make_pair(i, j));
+                
+            }
+        }
+        
+    }
+    
+}
+
+void Minesweeper::calMap(){
+    mCalMap.resize(mRow, vector<char>(mColumn, '0'));
+
+    for (size_t i = 0; i < mRow; i++)
+    {
+        for (size_t j = 0; j < mColumn; j++)
+        {
+            calMine(i, j);
+        }
+    }
+    
+    for (size_t i = 0; i < mRow; i++)
+    {
+        for (size_t j = 0; j < mColumn; j++)
+        {
+            cout << mCalMap[i][j];
         }
         cout << endl;
     }
-    return true;
 }
 
 bool Minesweeper::toggleMine(int _x, int _y) {
