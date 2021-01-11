@@ -33,17 +33,15 @@ int main(int argc, char const *argv[])
 
             istringstream iss(command);
             // x stands for column and y stands for row.
-            size_t x, y;
+           
+            iss >> column >> row;
 
-            iss >> x >> y;
-
-            isValid = minesweeper.toggleMine(x, y);
+            isValid = minesweeper.toggleMine(row, column);
             minesweeper.calMap();
         }
         else if (command.find(":play") != string::npos)
         {
             bool isDead = false;
-            size_t x, y;
             istringstream iss;
 
             while (!isDead)
@@ -55,9 +53,9 @@ int main(int argc, char const *argv[])
                 {
                     command.erase(0, 6);
                     iss = istringstream(command);
-                    iss >> x >> y;
+                    iss >> column >> row;
 
-                    isDead = minesweeper.touchMap(x, y);
+                    isDead = minesweeper.touchMap(row, column);
                 }
                 else
                 {
@@ -66,7 +64,7 @@ int main(int argc, char const *argv[])
             }
             cout << "DEAD(" << minesweeper.touchCount() << ")" << endl;
         }
-        else if (command.find(":quit"))
+        else if (command.find(":quit") != string::npos)
         {
             break;
         }
