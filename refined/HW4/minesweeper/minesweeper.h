@@ -40,6 +40,7 @@ private:
     size_t mTouchCount;
     vector<string> mRawMap;
     vector<vector<char> > mCalMap;
+    vector<vector<char> > mPlayMap;
 
     bool calMine(size_t row, size_t column);
 };

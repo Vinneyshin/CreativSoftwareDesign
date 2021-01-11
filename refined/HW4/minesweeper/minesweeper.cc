@@ -151,7 +151,7 @@ void Minesweeper::calMap()
     {
         for (size_t column = 0; column < mColumn; column++)
         {
-            if(calMine(row, column))
+            if (calMine(row, column))
             {
                 minePos.push_back(make_pair(row, column));
             }
@@ -163,7 +163,7 @@ void Minesweeper::calMap()
         mCalMap[minePos.back().first][minePos.back().second] = '*';
         minePos.pop_back();
     }
-    
+
     for (size_t row = 0; row < mRow; row++)
     {
         for (size_t column = 0; column < mColumn; column++)
@@ -197,8 +197,6 @@ bool Minesweeper::toggleMine(size_t row, size_t column)
         mRawMap[row][column] = '*';
         return true;
     }
-
-    return false;
 }
 
 size_t Minesweeper::row() const
@@ -218,12 +216,41 @@ char Minesweeper::get(size_t row, size_t column) const
 
 bool Minesweeper::setPlay()
 {
+    mPlayMap.assign(mRow, vector<char>(mColumn, '_'));
+    for (size_t i = 0; i < mRow; i++)
+    {
+        for (size_t j = 0; j < mColumn; j++)
+        {
+            cout << mPlayMap[i][j];
+        }
+        cout << endl;
+    }
     return true;
 }
 
 bool Minesweeper::touchMap(size_t row, size_t column)
 {
-    return true;
+    if (mRawMap[row][column] == '*')
+    {
+        ++mTouchCount;
+        return true;
+    }
+    else
+    {
+        ++mTouchCount;
+        mPlayMap[row][column] = mCalMap[row][column];
+
+        for (size_t i = 0; i < mRow; i++)
+        {
+            for (size_t j = 0; j < mColumn; j++)
+            {
+                cout << mPlayMap[i][j];
+            }
+            cout << endl;
+        }
+        
+        return false;
+    }
 }
 
 int Minesweeper::touchCount() const

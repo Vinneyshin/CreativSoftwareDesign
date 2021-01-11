@@ -43,10 +43,11 @@ int main(int argc, char const *argv[])
         {
             bool isDead = false;
             istringstream iss;
-
+            minesweeper.setPlay();
+            
             while (!isDead)
             {
-                minesweeper.setPlay();
+                
                 getline(cin, command);
 
                 if (command.find(":touch") != string::npos)
