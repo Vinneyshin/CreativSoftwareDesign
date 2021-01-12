@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 #include "draw_shape.h"
 
+//메인에서 에러 핸들링 하기보단 함수에게 그 권한을 이양하는게 더 OOP스럽지 않을까?
+
 int main(int argc, char const *argv[])
 {
     size_t row, column;
@@ -42,13 +44,6 @@ int main(int argc, char const *argv[])
                 shape.y = stoi(vs[2]);
                 shape.width = stoi(vs[3]);
                 shape.height = stoi(vs[4]);
-
-                if (shape.width % 2 == 0 || shape.height % 2 == 0)
-                {
-                    cout << "error invalid input" << endl;
-                    continue;
-                }
-
                 shape.brush = vs[5][0];
 
                 /*
@@ -63,12 +58,6 @@ int main(int argc, char const *argv[])
                 7. . . . . . . . . .
                 8. . . . . . . . . .
                 */
-
-                if (shape.x + shape.width / 2 > column - 1 || shape.y + shape.height / 2 > row - 1 || shape.x - shape.width / 2 < 0 || shape.y - shape.height / 2 < 0)
-                {
-                    cout << "error out of canvas" << endl;
-                    continue;
-                }
             }
 
             else if (vs[0] == "tri_up")
@@ -87,11 +76,7 @@ int main(int argc, char const *argv[])
                       #####      <
 
                 */
-                if (shape.x + (shape.height - 1) > column - 1 || shape.y + (shape.height - 1) > row - 1 || shape.x - (shape.height - 1) < 0)
-                {
-                    cout << "error out of canvas" << endl;
-                    continue;
-                }
+               
             }
 
             else if (vs[0] == "tri_down")
@@ -102,13 +87,18 @@ int main(int argc, char const *argv[])
                 shape.height = stoi(vs[3]);
                 shape.brush = vs[4][0];
 
-                if (shape.x + (shape.height - 1) > column - 1 || shape.y - (shape.height - 1) < 0 || shape.x - (shape.height - 1) < 0)
-                {
-                    cout << "error out of canvas" << endl;
-                    continue;
-                }
+               
             }
-            cv.AddShape(shape);
+            int check = cv.AddShape(shape);
+
+            switch(check) {
+                case ERROR_OUT_OF_CANVAS:
+                    cout << "error out of canvas" << endl; break;
+                case ERROR_INVALID_INPUT:
+                    cout << "error invalid input" << endl; break;
+                default:
+                    break;
+            }
         }
 
         else if (command.find("draw") != string::npos)

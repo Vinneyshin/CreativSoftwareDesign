@@ -13,9 +13,28 @@ Canvas::~Canvas()
 
 int Canvas::AddShape(const Shape &s)
 {
-    shapes_.push_back(s);
-    // Return the index of the shape.
-    return shapes_.size() - 1;
+    if (s.type == RECTANGLE && (s.width % 2 == 0 || s.height % 2 == 0))
+    {
+        return ERROR_INVALID_INPUT;
+    }
+    else if(s.type == RECTANGLE && (s.x + s.width / 2 > col_ - 1 || s.y + s.height / 2 > row_ - 1 || s.x - s.width / 2 < 0 || s.y - s.height / 2 < 0))
+    {
+        return ERROR_OUT_OF_CANVAS;
+    }
+    else if (s.type == TRIANGLE_UP && (s.x + (s.height - 1) > col_ - 1 || s.y + (s.height - 1) > row_ - 1 || s.x - (s.height - 1) < 0))
+    {
+        return ERROR_OUT_OF_CANVAS;
+    }
+    else if (s.type == TRIANGLE_DOWN && (s.x + (s.height - 1) > col_ - 1 || s.y - (s.height - 1) < 0 || s.x - (s.height - 1) < 0))
+    {
+        return ERROR_OUT_OF_CANVAS;
+    }
+    else
+    {
+        shapes_.push_back(s);
+        // Return the index of the shape.
+        return shapes_.size() - 1;
+    }
 }
 
 void Canvas::DeleteShape(int index)
