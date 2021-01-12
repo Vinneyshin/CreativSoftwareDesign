@@ -16,6 +16,8 @@ int main(int argc, char const *argv[])
         gomoku.IsOmok(&winner);
     }
 
+    cout << "Winner : " << (winner == BLACK ? "BLACK" : "WHITE") << endl;
+
     return 0;
 }
 

@@ -1,4 +1,4 @@
-#pragma once;
+#pragma once
 
 #define GROUND_SIZE 19
 
@@ -29,6 +29,7 @@ private:
     int turn_; // 마지막에 플레이 한 턴을 저장
     /* 멤버 변수를 추가. */
     char map_[GROUND_SIZE][GROUND_SIZE];
+    int min_row, max_row;
 };
 
 // 오목 판 출력
