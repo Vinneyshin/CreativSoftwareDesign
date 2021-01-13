@@ -5,10 +5,10 @@
 int main(int argc, char const *argv[])
 {
     int row, column;
-    int winner = NOT_DETERMINED;
+    int winner = NOBODY;
     Omok gomoku;
 
-    while (winner == NOT_DETERMINED)
+    while (winner == NOBODY)
     {
         std::cin >> row >> column;
         gomoku.Put(row, column);

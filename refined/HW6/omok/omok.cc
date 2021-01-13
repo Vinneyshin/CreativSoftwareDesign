@@ -2,7 +2,9 @@
 
 Omok::Omok() : width_(GROUND_SIZE), height_(GROUND_SIZE), turn_(NOBODY)
 {
+    // Assign min_row value to max
     min_row = GROUND_SIZE - 1;
+    // Assign max_row value to min
     max_row = 0;
 
     for (size_t i = 0; i < GROUND_SIZE; i++)
