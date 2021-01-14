@@ -59,6 +59,7 @@ ostream& operator << (ostream& os, const Canvas& c) {
                 }
                 os << endl;
         }
+	return os;
 }
 
 Shape::~Shape() {}
@@ -100,17 +101,21 @@ void Diamond::Draw(Canvas* canvas) const {
 istream& operator>>(istream& is, Rectangle& r) {
 	is >> r.x_ >> r.y_ >> r.w_ >> r.h_ >> r.brush_;
 	r.type_ = "rect";
+	return is;
 }
 istream& operator>>(istream& is, UpTriangle& t) {
 	is >> t.x_ >> t.y_ >> t.h_ >> t.brush_;
 	t.type_ = "tri_up";
+	return is;
 }
 istream& operator>>(istream& is, DownTriangle& d) {
 	is >> d.x_ >> d.y_ >> d.h_ >> d.brush_;
 	d.type_ = "tri_down";
+	return is;
 }
 istream& operator>>(istream& is, Diamond& dm) {
 	is >> dm.x_ >> dm.y_ >> dm.h_ >> dm.brush_;
 	dm.type_ = "diamond";
+	return is;
 }
 
