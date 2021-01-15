@@ -10,7 +10,7 @@ public:
     ~Canvas();
 
     // canvas 크기를 w * h 로 변경한다. 그려진 내용은 보존한다.
-    void Resize(size_t w, size_t h);
+    void Resize(size_t row, size_t col);
 
     // (x, y) 위치에 문자를 그린다. 범위 밖의 x, y는 무시한다.
     bool Draw(int x, int y, char brush);
@@ -28,6 +28,7 @@ private:
 class Shape
 {
 public:
+    Shape();
     virtual ~Shape();
     virtual void Draw(Canvas *canvas) const = 0;
 

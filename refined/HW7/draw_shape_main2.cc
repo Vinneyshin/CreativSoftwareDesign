@@ -12,7 +12,7 @@ int main()
     vector<Shape *> shapes;
     size_t row, col;
     
-    cin >> row >> col;
+    cin >> col >> row;
     Canvas canvas(row, col);
     cout << canvas;
 
@@ -79,8 +79,9 @@ int main()
         else if (tok == "resize")
         {
             int row, col;
-            cin >> row >> col;
+            cin >> col >> row;
             canvas.Resize(row, col);
+            cout << canvas;
         }
         else
         {
