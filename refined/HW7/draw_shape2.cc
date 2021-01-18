@@ -42,6 +42,7 @@ void Canvas::Resize(size_t row, size_t col)
     {
         map_[i].resize(col, '.');
     }
+
     row_ = row;
     col_ = col;
     
@@ -62,40 +63,76 @@ Shape::Shape()
     w_ = 0;
     brush_ = '\0';
 }
-Shape::~Shape() {}
 
-Rectangle::Rectangle()
-{
-    type_ = "rect";
-}
-Rectangle::~Rectangle() {}
 
 void Rectangle::Draw(Canvas *canvas) const
 {
     int x = this->x_, y = this->y_, w = this->w_ ,h = this->h_;
     char brush = this->brush_;
-    for (size_t i = 0; i < h; i++)
+
+    for (int i = 0; i < h; i++)
     {
-        for (size_t j = 0; j < w; j++)
+        for (int j = 0; j < w; j++)
         {
-            canvas->Draw(y + i, x + j, brush);
+            canvas->Draw(x + j, y + i, brush);
         }
     }
 }
 
+
 void UpTriangle::Draw(Canvas *canvas) const
 {
+    int x = this->x_, y = this->y_, h = this->h_;
+    char brush = this->brush_;
 
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = (0 - i); j <= i; j++)
+        {
+            canvas->Draw(x + j, y + i, brush);
+        }
+    }
 }
 
 void DownTriangle::Draw(Canvas *canvas) const
 {
+    int x = this->x_, y = this->y_, h = this->h_;
+    char brush = this->brush_;
 
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = (0 - i); j <= i; j++)
+        {
+            canvas->Draw(x + j, y - i, brush);
+        }
+    }
 }
 
 void Diamond::Draw(Canvas *canvas) const
 {
+    int x = this->x_, y = this->y_, h = this->h_;
+    char brush = this->brush_;
 
+
+    //Upper Triangle
+    for (int i = 0; i < h + 1; i++)
+    {
+        for (int j = (0 - i); j <= i; j++)
+        {
+            canvas->Draw(x + j, y + i, brush);
+        }
+    }
+
+    y += 2 * h;
+
+    //Down Triangle
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = (0 - i); j <= i; j++)
+        {
+            canvas->Draw(x + j, y - i, brush);
+        }
+    }
 }
 
 

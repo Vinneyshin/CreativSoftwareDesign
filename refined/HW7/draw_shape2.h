@@ -9,7 +9,7 @@ public:
     Canvas(size_t row, size_t col);
     ~Canvas();
 
-    // canvas 크기를 w * h 로 변경한다. 그려진 내용은 보존한다.
+    // canvas 크기를 row * col 로 변경한다. 그려진 내용은 보존한다.
     void Resize(size_t row, size_t col);
 
     // (x, y) 위치에 문자를 그린다. 범위 밖의 x, y는 무시한다.
@@ -29,7 +29,7 @@ class Shape
 {
 public:
     Shape();
-    virtual ~Shape();
+    virtual ~Shape() {};
     virtual void Draw(Canvas *canvas) const = 0;
 
     string type() const { return type_; }
@@ -49,8 +49,7 @@ protected:
 class Rectangle : public Shape
 {
 public:
-    Rectangle();
-    virtual ~Rectangle();
+    Rectangle() { type_ = "rect"; }
     virtual void Draw(Canvas *canvas) const;
 
 private:
@@ -60,6 +59,7 @@ private:
 class UpTriangle : public Shape
 {
 public:
+    UpTriangle() { type_ = "tri_up"; }
     virtual void Draw(Canvas *canvas) const;
 
 private:
@@ -69,6 +69,7 @@ private:
 class DownTriangle : public Shape
 {
 public:
+    DownTriangle() { type_ = "try_down"; }
     virtual void Draw(Canvas *canvas) const;
 
 private:
@@ -78,6 +79,7 @@ private:
 class Diamond : public Shape
 {
 public:
+    Diamond() { type_ = "diamond"; }
     virtual void Draw(Canvas *canvas) const;
 
 private:
