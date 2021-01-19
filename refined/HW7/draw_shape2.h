@@ -50,6 +50,7 @@ class Rectangle : public Shape
 {
 public:
     Rectangle() { type_ = "rect"; }
+    virtual ~Rectangle() {}
     virtual void Draw(Canvas *canvas) const;
 
 private:
@@ -60,6 +61,7 @@ class UpTriangle : public Shape
 {
 public:
     UpTriangle() { type_ = "tri_up"; }
+    virtual ~UpTriangle() {}
     virtual void Draw(Canvas *canvas) const;
 
 private:
@@ -70,6 +72,7 @@ class DownTriangle : public Shape
 {
 public:
     DownTriangle() { type_ = "try_down"; }
+    virtual ~DownTriangle() {}
     virtual void Draw(Canvas *canvas) const;
 
 private:
@@ -80,6 +83,7 @@ class Diamond : public Shape
 {
 public:
     Diamond() { type_ = "diamond"; }
+    virtual ~Diamond() {}
     virtual void Draw(Canvas *canvas) const;
 
 private:
