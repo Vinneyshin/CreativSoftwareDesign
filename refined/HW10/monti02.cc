@@ -55,14 +55,18 @@ int main(int argc, char const *argv[])
         }
         //we couldn't choose the prize
         else {
+            int randomDoor = rand() % (doorCnt - 2);
             if(strategy == CHANGE) {
-                if(door[1] == 1) succeedCnt++;
+                //우리가 만약 상을 고르면.. (randomDoor가 0인경우)
+                //현재 randomDoor은 사회자가 연 문과 내가 선택한 문 뺀 나머지(doorCnt - 2)
+                //그중 딱 하나만 정답임 그게 0인 경우고. (경우의수로 계산중)
+                if(!randomDoor) succeedCnt++;
             }
             else if(strategy == RANDOM) {
+                // 1/2의 확률을 곱해주는중..
                 int random = rand() % 2;
-                //change
                 if(random) {
-                    if(door[1] == 1) succeedCnt++;
+                    if(!randomDoor) succeedCnt++;
                 }
             }
         }
